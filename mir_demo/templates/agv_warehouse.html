@@ -1,0 +1,354 @@
+<!--Graphic User Interface (WAREHOUSE) to operate a MIR robot in the ARTC workshop
+Version 1.0
+Data: 2018-04-10-->
+
+<html>
+
+<style>
+ #myProgress {
+   width: 100%;
+   background-color: #f9f9f9;
+ }
+ #myBar {
+   width: 1%;
+   height: 25px;
+   background-color:#0ece11;
+ }
+</style>
+
+<head>
+    <title>AGV GUI | ARTC</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body style="overflow: hidden; background-color: #cccccc;">
+<script type="text/javascript">
+      (function theLoop(i) {
+            setTimeout(function() {
+
+                function reqListener() {
+                    var data = JSON.parse(this.responseText);
+                    document.querySelector("#battery_percentage").innerHTML = "Battery Percentage: " + data.battery_percentage + "";
+                    document.querySelector("#battery_time_remaining").innerHTML = "Battery Time Left: " + (data.battery_time_remaining / 3600).toFixed(2) + "";
+                    document.querySelector("#pos_x").innerHTML = "Position X : " + data.position.x + "";
+                    document.querySelector("#pos_y").innerHTML = "Position Y : " + data.position.y + "";
+                    document.querySelector("#orientation").innerHTML = "Orientation : " + data.position.orientation + "";
+                    document.querySelector("#velocity_angular").innerHTML = "Velocity Angular: " + data.velocity.angular + "";
+                    document.querySelector("#velocity_linear").innerHTML = "Velocity Linear : " + data.velocity.linear + "";
+                    document.querySelector("#distance_to_next_target").innerHTML = "distance_to_next_target: " + data.distance_to_next_target + "";
+                    document.querySelector("#state_id").innerHTML = "state_id: " + data.state_id + "";
+                    document.querySelector("#state_text").innerHTML = "state_text: " + data.state_text + "";
+                    document.querySelector("#errors_code").innerHTML = "errors_code: " + data.errors.code + "";
+                    document.querySelector("#errors_description").innerHTML = "errors_description: " + data.errors.description + "";
+                    document.querySelector("#errors_module").innerHTML = "errors_module: " + data.errors.module + "";
+                }
+
+                // Create a new ajax requst
+                var oReq = new XMLHttpRequest();
+
+                // Fire callback on load event
+                oReq.addEventListener("load", reqListener);
+
+                // Create the connection to our API
+                oReq.open("GET", "http://10.100.108.210:8080/v1.0.0/status");
+
+                // Fire the request
+                //oReq.send();
+
+                if (--i) { // If i > 0, keep going
+                    theLoop(i); // Call the loop again, and pass it the current value of i
+                }
+            }, 750);
+        })(5000); // Plays the loop (x) times
+
+        function Dispatch_Parts_NTX1000() {
+            if (confirm("Are you sure?")) {
+            //move_progressbar();
+            $.ajax({
+                method: 'POST',
+                url: "/script",
+                data: {
+                    'value': 'Dispatch_parts_NTX1000'
+                }
+            });
+            } else {
+                 closeAlert();
+             }
+
+        }
+        function Bring_Empty_Trolley_NTX1000() {
+            if (confirm("Are you sure?")) {
+            //move_progressbar();
+            $.ajax({
+                method: 'POST',
+                url: "/script",
+                data: {
+                    'value': 'Bring_Empty_Trolley_NTX1000'
+                }
+            });
+            } else {
+                 closeAlert();
+            }
+        }
+        function Dispatch_Parts_Line() {
+            if (confirm("Are you sure?")) {
+            //move_progressbar();
+            $.ajax({
+                method: 'POST',
+                url: "/script",
+                data: {
+                    'value': 'Dispatch_Parts_Line'
+                }
+            });
+            } else {
+                 closeAlert();
+            }
+        }
+        function Bring_Empty_Trolley_Line() {
+            if (confirm("Are you sure?")) {
+            //move_progressbar();
+            $.ajax({
+                method: 'POST',
+                url: "/script",
+                data: {
+                    'value': 'Bring_Empty_Trolley_Line'
+                }
+            });
+            } else {
+                 closeAlert();
+            }
+        }
+        function Charge_AGV() {
+         if(confirm("Are you sure?")){
+            showAlert_charging();
+            $.ajax({
+                method: 'POST',
+                url: "/script",
+                data: {
+                    'value': 'Charge_AGV'
+                }
+            });
+	}
+	else
+	 { closeAlert();
+	 }
+        }
+        function Pause_AGV() {
+	if(confirm("Are you sure?")){
+            $.ajax({
+                method: 'POST',
+                url: "/script",
+                data: {
+                    'value': 'Pause_AGV'
+                }
+            });
+	}
+	else {closeAlert();}
+        }
+        function Stop_AGV() {
+        if(confirm("Are you sure?")){
+            showAlert_stop();
+            $.ajax({
+                method: 'POST',
+                url: "/script",
+                data: {
+                    'value': 'Stop_AGV'
+                }
+            });
+	}
+	else {closeAlert();}
+        }
+        function Initialize_AGV() {
+         if(confirm("Are you sure?")){
+            showAlert_initialize();
+            $.ajax({
+                method: 'POST',
+                url: "/script",
+                data: {
+                    'value': 'Initialize_AGV'
+                }
+            });
+	}
+	else {closeAlert();}
+        }
+
+</script>
+
+<script  type="text/javascript">
+
+function move_progressbar() {
+  	var elem = document.getElementById("myBar");
+  	var width = 1;
+  	var id = setInterval(frame, 150);
+  	function frame() {
+   	 if (width >= 100) {
+      	clearInterval(id);
+      	showAlert_success();
+   	 } else {
+      	width++;
+      	elem.style.width = width + '%';
+    	}
+  	}
+}
+
+function popup_dialogue() {
+   alert("Are you sure?");
+}
+
+$('.alert .close').live("click", function(e) {
+    $(this).parent().hide();
+});
+
+function showAlert() {
+    $(".alert").addClass("in");
+    $("#cert-error").show();
+}
+
+function showAlert_success() {
+    $(".alert").addClass("in");
+    $("#cert-success").show();
+}
+
+function showAlert_stop() {
+    $(".alert").addClass("in");
+    $("#cert-stop").show();
+}
+
+function showAlert_charging() {
+    $(".alert").addClass("in");
+    $("#cert-charging").show();
+}
+
+function showAlert_initialize() {
+    $(".alert").addClass("in");
+    $("#cert-initialize").show();
+}
+
+function closeAlert() {
+    $("#cert-error").hide();
+}
+
+function create_dialog() {
+    var txt;
+    if (confirm("Press a button!")) {
+        txt = "You pressed OK!";
+    } else {
+        txt = "You pressed Cancel!";
+    }
+    document.getElementById("demo").innerHTML = txt;
+}
+
+</script>
+
+
+<div class="container">
+
+<div class="row">
+<div class="col-sm-12" style="background-color:#cccccc;">
+  <h2 class="font-weight-bold" > ARTC Warehouse Operator Application</h2>
+  <!--img src="mir.png" class="img-rounded"  style ="width:15%;" alt="Cinque Terre"-->
+</div>
+</div>
+
+<!--div id="footer" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<p id="copyright" property="dc:rights">&copy;
+  <span property="dc:dateCopyrighted">2018</span>
+  <span property="dc:publisher">Advanced Remanufacturing Technology Center - A*STAR</span>
+</p>
+</div-->
+
+<!--i class="fa fa-spinner">DD</i-->
+<!--div style="position: absolute;  top: 620px; left:1500px;> id = "battery_percentage"></div>
+	<div id = "battery_time_remaining"></div>
+	<div id = "pos_x"></div>
+	<div id = "pos_y"></div>
+	<div id = "orientation"></div>
+	<div id ="velocity_angular"></div>
+	<div id ="velocity_linear"></div>
+	<div id ="distance_to_next_target"></div>
+	<div id ="state_id"></div>
+	<div id ="state_text"></div>
+	<div id ="errors_code"></div>
+	<div id ="errors_description"></div>
+	<div id ="errors_module"></div-->
+
+<!--<div class="row">
+<div class="col-sm-11" style="background-color:#cccccc;">
+	<h4>Progress of current running task:</h4>
+	<div id="myProgress">
+  	<div id="myBar"></div>
+	</div>
+</div>
+</div>-->
+<br>
+
+<div class="row">
+       <div class="col-sm-6" style="background-color:#cccccc;">
+          <button type="button"  style="height:150px;width:380px;background-color: #1c3ec9; text-align: center; font-size: 20px; color: white;"  onclick="Dispatch_Parts_NTX1000()">Dispatch Parts to NTX1000</button>
+       </div>
+       <div class="col-sm-6" style="background-color:#cccccc;">
+          <button  type="button" style="height:150px;width:380px;background-color: #0d6811; text-align: center; font-size: 20px; color: white;"  onclick="Bring_Empty_Trolley_NTX1000()">Bring back Trolley from NTX1000</button>
+       </div>
+</div>
+<br>
+<div class="row">
+       <div class="col-sm-6" style="background-color:#cccccc;">
+          <button type="button" style="height:150px;width:380px;background-color: #1c3ec9; text-align: center; font-size: 20px; color: white;"  onclick="Dispatch_Parts_Line()">Dispatch parts to Assembly Line</button>
+        </div>
+       <div class="col-sm-6" style="background-color:#cccccc;">
+         <button  type="button" style="height:150px;width:380px;background-color: #0d6811; text-align: center; font-size: 20px; color: white;"  onclick="Bring_Empty_Trolley_Line()">Bring back Trolley from Assembly Line</button>
+       </div>
+</div>
+<br>
+<div class="row">
+       <div class="col-sm-4" style="background-color:#cccccc;">
+        <button  type="button" style="height:60px;width:120px;background-color: #1ddee5; text-align: center; font-size: 20px; color: white;"  onclick="Charge_AGV()">Charge AGV</button>
+       </div>
+       <div class="col-sm-4" style="background-color:#cccccc;">
+        <button  type="button" style="height:60px;width:120px; background-color: #1ddee5; text-align: center; font-size: 20px; color: white;"  onclick="Initialize_AGV()">Initialize AGV</button>
+       </div>
+       <!--<div class="col-sm-4" style="background-color:#cccccc;">
+         <button  type="button" style="height:60px;width:120px; background-color: #ffc700; text-align: center; font-size: 20px; color: white;"  onclick="Pause_AGV()">Pause</button>
+       </div>-->
+       <div class="col-sm-4" style="background-color:#cccccc;">
+         <button  type="button" style="height:60px;width:140px; background-color: #ff0000; text-align: center; font-size: 20px; color: white;"  onclick="Stop_AGV()">E-STOP</button>
+       </div>
+</div>
+<br>
+
+<div class="row">
+<div class="col-sm-11" style="background-color:#cccccc;">
+   <h4>Feedback information from AGV:</h4>
+   <div class="alert alert-success alert-dismissible" id="cert-success" style="display:none;">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Success!</strong> AGV has successfully accomplished the assigned 	task, waiting for the next one ......
+   </div>
+
+   <div class="alert alert-danger alert-dismissible" id="cert-stop" style="display:none;">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Warning!</strong> Emergency STOP is engaged, please check and make sure AGV is in safe condition ......
+   </div>
+
+   <div class="alert alert-warning alert-dismissible" id="cert-charging" style="display:none;">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Warning!</strong> All tasks have been canceled, AGV is moving to the charging station!
+   </div>
+   <div class="alert alert-success alert-dismissible" id="cert-initialize" style="display:none;">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Success!</strong> Initializing AGV and moving it to the wait position......
+   </div>
+ </div>
+</div>
+
+</div>
+
+</body>
+
+</html>
