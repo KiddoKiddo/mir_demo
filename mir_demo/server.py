@@ -178,45 +178,45 @@ def script():
 
     input_string = request.form['value']
     if (input_string == 'Dispatch_Parts_Line_Error') :   #Dispatch Parts to Assembly Line for MICR Error demo
-
+	
 	headers = {'Content-type': 'application/json'}
 	r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission":"97b0f8eb-4855-11e8-a4e3-f44d306f3f85"}, headers=headers)  #1.start position
 	print(r.text)
-
-	headers = {'Content-type': 'application/json'}
+	
+	headers = {'Content-type': 'application/json'}	
 	r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "fd2fc112-485a-11e8-9812-f44d306f3f85"}, headers=headers)  #2.wait position #2 near warehouse
 	print(r.text)
-
+	
 	headers = {'Content-type': 'application/json'}
 	r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "590f1604-5504-11e8-8d66-f44d306f3f85"}, headers=headers)  #2.Error_demo
 	print(r.text)
-
+	
 	headers = {'Content-type': 'application/json'}
 	r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "eded94e0-6de8-11e8-9f16-f44d306f3f85"}, headers=headers)   #3.pick up trolley
 	print(r.text)
-
+	
 	headers = {'Content-type': 'application/json'}
 	r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "5461f0d2-0567-11e8-b987-f44d306f3f85"}, headers=headers)   #4.make a sound
 	print(r.text)
-
+	
 	headers = {'Content-type': 'application/json'}
 	r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "7f107423-e3a3-11e7-896e-f44d306f3f85"}, headers=headers)   #5.go to station 1
 	print(r.text)
 	time.sleep(5)
-
+	
 	headers = {'Content-type': 'application/json'}
 	r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "5461f0d2-0567-11e8-b987-f44d306f3f85"}, headers=headers)   #6.make a sound
 	print(r.text)
-
+	
 	headers = {'Content-type': 'application/json'}
 	r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "8ead8319-21e6-11e8-bbd3-f44d306f3f85"}, headers=headers)   #5.wait for 5 seconds
 	print(r.text)
 	time.sleep(5)
-
+	
 	headers = {'Content-type': 'application/json'}
 	r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "22cb488a-6dea-11e8-9f16-f44d306f3f85"}, headers=headers)   #10.release trolley
 	print(r.text)
-
+	
     	headers = {'Content-type': 'application/json'}
     	r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission":"97b0f8eb-4855-11e8-a4e3-f44d306f3f85"}, headers=headers)  #11.go back to start position
     	print(r.text)
@@ -262,48 +262,50 @@ def script():
         print(r.text)
         return "Bring back empty trolley from assembly line to warehouse mission has been accomplished!"
 
-        input_string = request.form['value']
-        if (input_string == 'Bring_Empty_Trolley_Line_Demo') :   #Bring Empty Trolley from Assembly Line
+    input_string = request.form['value']
+    if (input_string == 'Bring_Empty_Trolley_Line_Demo') :   #Bring Empty Trolley from Assembly Line
 
-        	headers = {'Content-type': 'application/json'}
-            r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission":"97b0f8eb-4855-11e8-a4e3-f44d306f3f85"}, headers=headers)  #1.start position
-            print(r.text)
+    	headers = {'Content-type': 'application/json'}
+        r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission":"97b0f8eb-4855-11e8-a4e3-f44d306f3f85"}, headers=headers)  #1.start position
+        print(r.text)
 
-        	headers = {'Content-type': 'application/json'}
-            r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "798ad3c2-3d33-11e8-99fb-f44d306f3f85"}, headers=headers)  #2. go to wait position 2 near station one
-            print(r.text)
+    	headers = {'Content-type': 'application/json'}
+        r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "1cd195ef-1d35-11e8-ba33-f44d306f3f85"}, headers=headers)  #2. Go to wait position  1- warehouse
+        print(r.text)
 
-            headers = {'Content-type': 'application/json'}
-            r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "4e11b245-4c43-11e8-97b9-f44d306f3f85"}, headers=headers)   #2'. Error_Demo
-            print(r.text)
+    	headers = {'Content-type': 'application/json'}
+        r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "4e11b245-4c43-11e8-97b9-f44d306f3f85"}, headers=headers)  #2. Error_Demo
+        print(r.text)
 
-        	headers = {'Content-type': 'application/json'}
-            r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "3561d489-3d35-11e8-99fb-f44d306f3f85"}, headers=headers)   #3.pick up trolley from station one
-            print(r.text)
+    	headers = {'Content-type': 'application/json'}
+        r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "3561d489-3d35-11e8-99fb-f44d306f3f85"}, headers=headers)   #3.pick up trolley from station one
+        print(r.text)
 
-        	headers = {'Content-type': 'application/json'}
-            r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "5461f0d2-0567-11e8-b987-f44d306f3f85"}, headers=headers)   #4.make a sound
-            print(r.text)
+    	headers = {'Content-type': 'application/json'}
+        r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "5461f0d2-0567-11e8-b987-f44d306f3f85"}, headers=headers)   #4.make a sound
+        print(r.text)
 
-        	headers = {'Content-type': 'application/json'}
-            r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "fd2fc112-485a-11e8-9812-f44d306f3f85"}, headers=headers)   #5.go to wait position 2 near warehouse
-            print(r.text)
-            time.sleep(5)
+    	headers = {'Content-type': 'application/json'}
+        r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "fd2fc112-485a-11e8-9812-f44d306f3f85"}, headers=headers)   #5.go to wait position 2 near warehouse
+        print(r.text)
+        time.sleep(5)
 
-        	headers = {'Content-type': 'application/json'}
-            r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "22cb488a-6dea-11e8-9f16-f44d306f3f85"}, headers=headers)   #10.release trolley
-            print(r.text)
-
-
-        	headers = {'Content-type': 'application/json'}
-            r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "5461f0d2-0567-11e8-b987-f44d306f3f85"}, headers=headers)   #6.make a sound
-            print(r.text)
+    	headers = {'Content-type': 'application/json'}
+        r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "22cb488a-6dea-11e8-9f16-f44d306f3f85"}, headers=headers)   #10.release trolley
+        print(r.text)
 
 
-        	headers = {'Content-type': 'application/json'}
-            r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission":"97b0f8eb-4855-11e8-a4e3-f44d306f3f85"}, headers=headers)  #11.go back to start position
-            print(r.text)
-            return "Bring back empty trolley from assembly line to warehouse mission has been accomplished!"
+    	headers = {'Content-type': 'application/json'}
+        r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission": "5461f0d2-0567-11e8-b987-f44d306f3f85"}, headers=headers)   #6.make a sound
+        print(r.text)
+
+
+    	headers = {'Content-type': 'application/json'}
+        r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission":"97b0f8eb-4855-11e8-a4e3-f44d306f3f85"}, headers=headers)  #11.go back to start position
+        print(r.text)
+        return "Bring back empty trolley from assembly line to warehouse mission has been accomplished!"
+
+    
 
 
     input_string = request.form['value']
@@ -341,10 +343,11 @@ def script():
     input_string = request.form['value']
     if (input_string == 'Initialize_AGV') :   #STOP the AGV and clear up all missions in the MIR robot
     	headers = {'Content-type': 'application/json'}
-	r = requests.delete('http://10.100.108.210:8080/v1.0.0/mission_queue')
-	print(r.text)
+    	r = requests.delete('http://10.100.108.210:8080/v1.0.0/mission_queue')
+    	print(r.text)
         r = requests.post('http://10.100.108.210:8080/v1.0.0/mission_queue', json ={"mission":"97b0f8eb-4855-11e8-a4e3-f44d306f3f85"}, headers=headers)  #1.start position
         print(r.text)
+        return "Initialize_AGV!!"
 
     input_string = request.form['value']
     if (input_string == 'Stop_AGV') :   #STOP the AGV and clear up all missions in the MIR robot
