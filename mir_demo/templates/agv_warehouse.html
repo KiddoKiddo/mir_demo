@@ -73,7 +73,7 @@ Data: 2018-04-10-->
             //move_progressbar();
             $.ajax({
                 method: 'POST',
-                url: "/script",
+                url: "./script",
                 data: {
                     'value': 'Dispatch_parts_NTX1000'
                 }
@@ -88,7 +88,7 @@ Data: 2018-04-10-->
             //move_progressbar();
             $.ajax({
                 method: 'POST',
-                url: "/script",
+                url: "./script",
                 data: {
                     'value': 'Bring_Empty_Trolley_NTX1000'
                 }
@@ -102,7 +102,7 @@ Data: 2018-04-10-->
             //move_progressbar();
             $.ajax({
                 method: 'POST',
-                url: "/script",
+                url: "./script",
                 data: {
                     'value': 'Dispatch_Parts_Line'
                 }
@@ -116,7 +116,7 @@ Data: 2018-04-10-->
             //move_progressbar();
             $.ajax({
                 method: 'POST',
-                url: "/script",
+                url: "./script",
                 data: {
                     'value': 'Bring_Empty_Trolley_Line'
                 }
@@ -130,7 +130,7 @@ Data: 2018-04-10-->
             showAlert_charging();
             $.ajax({
                 method: 'POST',
-                url: "/script",
+                url: "./script",
                 data: {
                     'value': 'Charge_AGV'
                 }
@@ -144,7 +144,7 @@ Data: 2018-04-10-->
 	if(confirm("Are you sure?")){
             $.ajax({
                 method: 'POST',
-                url: "/script",
+                url: "./script",
                 data: {
                     'value': 'Pause_AGV'
                 }
@@ -157,7 +157,7 @@ Data: 2018-04-10-->
             showAlert_stop();
             $.ajax({
                 method: 'POST',
-                url: "/script",
+                url: "./script",
                 data: {
                     'value': 'Stop_AGV'
                 }
@@ -170,7 +170,7 @@ Data: 2018-04-10-->
             showAlert_initialize();
             $.ajax({
                 method: 'POST',
-                url: "/script",
+                url: "./script",
                 data: {
                     'value': 'Initialize_AGV'
                 }
